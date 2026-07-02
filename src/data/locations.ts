@@ -14,6 +14,8 @@ export interface HolySite {
   nameArabic: string;
   category: 'masjid' | 'mashaer' | 'miqat' | 'other';
   description: string;
+  lat: number;
+  lng: number;
   recommendations: Recommendation[];
 }
 
@@ -25,6 +27,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'ميقات (ذو الحليفة)',
     category: 'miqat',
     description: 'Titik permulaan ihram — di sinilah jemaah berniat untuk Umrah atau Haji.',
+    lat: 24.4635,
+    lng: 39.6013,
     recommendations: [
       {
         title: 'Talbiyah',
@@ -44,6 +48,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'أول رؤية للكعبة',
     category: 'masjid',
     description: 'Saat pertama kali melihat Kaabah — salah satu waktu paling mustajab untuk berdoa.',
+    lat: 21.4225,
+    lng: 39.8262,
     recommendations: [
       {
         title: 'Doa Melihat Kaabah',
@@ -70,6 +76,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'الطواف حول الكعبة',
     category: 'masjid',
     description: 'Tawaf — 7 pusingan mengelilingi Kaabah, dimulai dari Hajar Aswad.',
+    lat: 21.4225,
+    lng: 39.8262,
     recommendations: [
       {
         title: 'Doa antara Rukun Yamani dan Hajar Aswad',
@@ -88,6 +96,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'مقام إبراهيم',
     category: 'masjid',
     description: 'Tempat berdirinya Nabi Ibrahim AS ketika membina Kaabah. Disunatkan solat sunat tawaf 2 rakaat di belakang Maqam Ibrahim.',
+    lat: 21.4226,
+    lng: 39.8263,
     recommendations: [
       {
         title: 'Surah Al-Kafirun (Rakaat 1)',
@@ -114,6 +124,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'الملتزم',
     category: 'masjid',
     description: 'Kawasan antara Hajar Aswad dan pintu Kaabah. Tempat paling mustajab untuk berdoa di dalam Masjid al-Haram.',
+    lat: 21.4225,
+    lng: 39.8262,
     recommendations: [
       {
         title: 'Doa di Multazam',
@@ -133,6 +145,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'الصفا',
     category: 'masjid',
     description: 'Titik permulaan Sa\'i. Di sinilah Siti Hajar mula berlari mencari air untuk anaknya, Nabi Ismail AS.',
+    lat: 21.4235,
+    lng: 39.8275,
     recommendations: [
       {
         title: 'Ayat Permulaan Sa\'i',
@@ -159,6 +173,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'المروة',
     category: 'masjid',
     description: 'Penamat Sa\'i. Di sinilah Siti Hajar menemui air Zamzam setelah 7 kali perjalanan antara Safa dan Marwa.',
+    lat: 21.4215,
+    lng: 39.8285,
     recommendations: [
       {
         title: 'Doa di Marwa',
@@ -177,6 +193,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'الضوء الأخضر (الهرولة)',
     category: 'masjid',
     description: 'Kawasan antara dua lampu hijau — sunnah berlari-lari anak (hari-hari) bagi lelaki, mengingati perjuangan Siti Hajar.',
+    lat: 21.4226,
+    lng: 39.828,
     recommendations: [
       {
         title: 'Doa antara Lampu Hijau',
@@ -196,6 +214,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'عرفة (الوقوف)',
     category: 'mashaer',
     description: 'Kemuncak Haji — wukuf di Arafat pada 9 Zulhijjah. Sebaik-baik doa adalah doa pada hari Arafat.',
+    lat: 21.3547,
+    lng: 39.9839,
     recommendations: [
       {
         title: 'Zikir Terbaik Hari Arafat',
@@ -231,6 +251,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'المزدلفة',
     category: 'mashaer',
     description: 'Tempat bermalam selepas Arafat — kumpul batu untuk melontar Jamrah.',
+    lat: 21.3939,
+    lng: 39.9178,
     recommendations: [
       {
         title: 'Zikir Malam Muzdalifah',
@@ -258,6 +280,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'الجمرات (الرمي)',
     category: 'mashaer',
     description: 'Melontar 3 tiang Jamrah — mengingati peristiwa Nabi Ibrahim AS melontar syaitan.',
+    lat: 21.42,
+    lng: 39.87,
     recommendations: [
       {
         title: 'Takbir Setiap Lontaran',
@@ -285,6 +309,8 @@ export const holySites: HolySite[] = [
     nameArabic: 'الروضة الشريفة',
     category: 'other',
     description: 'Raudhah — ruang antara mimbar dan makam Rasulullah SAW di Masjid Nabawi. Salah satu taman daripada taman-taman syurga.',
+    lat: 24.4672,
+    lng: 39.6112,
     recommendations: [
       {
         title: 'Solat & Doa di Raudhah',
