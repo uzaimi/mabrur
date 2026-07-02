@@ -1,32 +1,47 @@
-# React + TypeScript + Vite
+# Mabrur (مَبْرُور)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> *"Semoga ibadah kita diterima."*
 
-Currently, two official plugins are available:
+**Mabrur** is a location-aware spiritual companion for Hajj & Umrah pilgrims. It suggests surah, doa, and adhkar based on where you are in the Holy Land.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- 📍 **10+ Holy Sites** — Masjid al-Haram, Arafat, Mina, Muzdalifah, Safa & Marwa, Maqam Ibrahim, Multazam, Raudhah & more
+- 📖 **Curated Recommendations** — Arabic text with transliteration, English & Bahasa Malaysia translations
+- 🌙 **Dark Mode** — Easy on the eyes, especially in the bright Haram sun
+- 📱 **PWA** — Install on your phone, works offline
+- 📚 **Sourced** — Every recommendation cites its source (Quran, Hadith, Athar)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Tech Stack
 
-## Expanding the Oxlint configuration
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- Deployed on GitHub Pages
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## 🏃 Run Locally
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## 📦 Build
+
+```bash
+npm run build
+# Output in dist/
+```
+
+## 📍 Holy Sites Covered
+
+| Category | Sites |
+|----------|-------|
+| **Masjid al-Haram** | Kaabah (first sight), Tawaf area, Maqam Ibrahim, Multazam, Safa, Marwa, Green Light |
+| **Masyair** | Arafat (Wukuf), Muzdalifah, Mina (Jamarat) |
+| **Miqat** | Zul Hulaifah / Bir Ali |
+| **Other** | Raudhah (Masjid Nabawi) |
+
+## 🙏 About the Name
+
+*Mabrur* (مَبْرُور) means "accepted" — as in *Hajj Mabrur*, an accepted and blessed pilgrimage. May this app help make your ibadah more meaningful and accepted by Allah.
