@@ -1,0 +1,22 @@
+{
+  "name": "Mabrur - Teman Umrah & Haji",
+  "short_name": "Mabrur",
+  "description": "Cadangan surah & doa berdasarkan lokasi anda di Tanah Suci semasa Umrah dan Haji",
+  "start_url": "/mabrur/",
+  "display": "standalone",
+  "background_color": "#030712",
+  "theme_color": "#030712",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/mabrur/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/mabrur/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
