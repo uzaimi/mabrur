@@ -6,6 +6,7 @@ export interface Recommendation {
   translationMs: string;
   source: string;
   audioUrl?: string;
+  excerpt?: boolean;
 }
 
 export interface HolySite {
@@ -227,6 +228,7 @@ export const holySites: HolySite[] = [
       },
       {
         title: '3 Ayat Terakhir Surah Al-Hasyr',
+        excerpt: true,
         arabic: 'هُوَ اللَّهُ الَّذِي لَا إِلَهَ إِلَّا هُوَ... (Al-Hasyr 59:22-24)',
         transliteration: 'Huwallahu alladzii laa ilaaha illaa Huwa... \'Aalimul ghaibi wasy syahaadah... Huwallahu alladzii laa ilaaha illaa Huwal Malikul Quddusus Salaamul Mu\'minul Muhaiminul \'Aziizul Jabbaarul Mutakabbir...',
         translation: 'He is Allah, besides Whom there is no god... He is Allah, the Creator, the Inventor, the Fashioner... To Him belong the best names.',
@@ -235,6 +237,7 @@ export const holySites: HolySite[] = [
       },
       {
         title: 'Sayyidul Istighfar',
+        excerpt: true,
         arabic: 'اللَّهُمَّ أَنْتَ رَبِّي، لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ...',
         transliteration: 'Allahumma Anta Rabbii, laa ilaaha illaa Ant. Khalaqtanii wa ana \'abduka, wa ana \'alaa \'ahdika wa wa\'dika mastatha\'t...',
         translation: 'O Allah, You are my Lord. There is no god but You. You created me and I am Your servant. I am upon Your covenant and promise as much as I am able...',
@@ -264,6 +267,7 @@ export const holySites: HolySite[] = [
       },
       {
         title: 'Surah Al-Fatihah',
+        excerpt: true,
         arabic: 'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ﴿١﴾ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ﴿٢﴾...',
         transliteration: 'Bismillahir rahmaanir rahiim. Alhamdu lillaahi Rabbil \'aalamiin. Arrahmaanir rahiim. Maaliki yaumid diin...',
         translation: 'In the name of Allah, the Most Gracious, the Most Merciful. All praise is due to Allah, Lord of the worlds...',

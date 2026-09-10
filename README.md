@@ -9,12 +9,12 @@
 - 📍 **10+ Holy Sites** — Masjid al-Haram, Arafat, Mina, Muzdalifah, Safa & Marwa, Maqam Ibrahim, Multazam, Raudhah & more
 - 📖 **Curated Recommendations** — Arabic text with transliteration, English & Bahasa Malaysia translations
 - 🌙 **Dark Mode** — Easy on the eyes, especially in the bright Haram sun
-- 📱 **PWA** — Install on your phone, works offline
-- 📚 **Sourced** — Every recommendation cites its source (Quran, Hadith, Athar)
+- 📱 **Web app manifest** — Includes an app icon; offline reload is not yet supported (no service worker).
+- 📚 **Source notes** — References are included, but detailed citation and religious-content review remain outstanding. Incomplete readings are labeled as excerpts.
 
 ## 🚀 Tech Stack
 
-- React 18 + TypeScript
+- React 19 + TypeScript
 - Vite
 - Tailwind CSS
 - Deployed on GitHub Pages
@@ -22,7 +22,8 @@
 ## 🏃 Run Locally
 
 ```bash
-npm install
+# Node.js 24.15 or newer within the 24.x release line
+npm ci
 npm run dev
 ```
 
@@ -32,6 +33,12 @@ npm run dev
 npm run build
 # Output in dist/
 ```
+
+Run `npm test` and `npm run lint` before submitting changes. Pull requests run tests, lint, and a production build without deploying.
+
+GPS is requested only on demand over HTTPS (or localhost). It is a snapshot: use **Kemas kini lokasi** after moving. Coordinates stay in memory on this device, are not saved, and are used only to calculate straight-line distances. Approximate GPS cannot distinguish nearby indoor areas or establish ritual boundaries. Manual search works without location permission.
+
+See [ENHANCEMENTS.md](ENHANCEMENTS.md) for the prioritized review and roadmap.
 
 ## 📍 Holy Sites Covered
 
