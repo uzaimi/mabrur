@@ -4,6 +4,8 @@ Reviewed 10 September 2026 against main commit d3af0da. This is a comprehensive 
 
 ## Repairs included
 
+Arrival detection is now included in the draft: opt-in foreground location watch, accuracy/freshness checks, dwell time, overlapping-site choices, and exit-based rearming. The proposed foreground updates row below is implemented for arrival hints; physical-device field testing and site-coordinate review remain outstanding.
+
 - Ignore GPS callbacks after cancellation, replacement, or unmount; clear stale coordinates after a failed refresh.
 - Handle valid zero latitude/longitude; request fresh coordinates, display accuracy, and offer refresh/cancel actions.
 - Explain snapshot GPS and straight-line distance; calculate location locally without saving coordinates.

@@ -40,6 +40,14 @@ GPS is requested only on demand over HTTPS (or localhost). It is a snapshot: use
 
 See [ENHANCEMENTS.md](ENHANCEMENTS.md) for the prioritized review and roadmap.
 
+## Arrival detection
+
+Tap **Aktifkan pengesanan ketibaan**, allow location, and keep the app visible. The separate **Cari lokasi** control still provides a one-time distance snapshot. Arrival detection uses `watchPosition` on the device; it does not save or send coordinates, request notifications, or run as a background service.
+
+An arrival hint requires GPS accuracy of 50 m or better, a fix no more than 15 seconds old, and 8 seconds near the same candidate group. At least one site's 100 m entry radius must contain the reported accuracy circle. These are conservative product defaults, not surveyed boundaries. The app automatically displays the reading for a single candidate; overlapping areas such as Tawaf/Multazam offer choices. Detection is independent of search/category filters.
+
+Repeated fixes do not reopen a dismissed hint. A site rearms only after a reliable fix places the user outside a 180 m exit radius, allowing for reported accuracy. Stopping detection clears the watch; hiding the app pauses it and resuming requires a fresh fix. Do not rely on arrival alerts while the phone is locked or the app is closed. Coordinate/source review and field testing in the Holy Land remain required; a proximity hint cannot establish a ritual boundary or exact indoor location.
+
 ## 📍 Holy Sites Covered
 
 | Category | Sites |

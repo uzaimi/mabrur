@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { holySites, siteCategories, HolySite } from '@/data/locations';
 import { useGeolocation, formatDistance } from '@/hooks/useGeolocation';
+import { useArrivalTracking } from '@/hooks/useArrivalTracking';
 import { MapPin, Search, ChevronDown, Copy, Check, BookOpen, Map, X, Navigation, Loader2 } from 'lucide-react';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     if (copyTimer.current) clearTimeout(copyTimer.current);
   }, []);
   const { gps, requestLocation, clearLocation, sortByProximity, distanceTo } = useGeolocation();
+  const tracking = useArrivalTracking();
 
   const filteredSites = useMemo(() => {
     let sites = holySites;
@@ -130,6 +132,17 @@ function App() {
         </div>
       )}
 
+      <section aria-label="Pengesanan ketibaan" className="max-w-lg mx-auto px-4 py-4 space-y-3">
+        <button className="rounded-xl bg-emerald-800 px-4 py-3 text-white font-medium" onClick={tracking.enabled ? tracking.stop : tracking.start}>
+          {tracking.enabled ? 'Hentikan pengesanan ketibaan' : 'Aktifkan pengesanan ketibaan'}
+        </button>
+        <p className="text-xs text-gray-400">Benarkan lokasi dan biarkan aplikasi terbuka untuk menerima cadangan doa apabila tiba berdekatan. Pengesanan dijeda apabila skrin dikunci atau aplikasi disembunyikan. Lokasi tidak disimpan atau dihantar ke pelayan.</p>
+        {tracking.enabled && <p role="status" className="text-sm text-emerald-300">{tracking.notice}</p>}
+        {tracking.error && <p role="alert" className="text-sm text-red-300">{tracking.error}</p>}
+        {tracking.enabled && !tracking.paused && tracking.arrival && <ArrivalReading key={tracking.arrival.sequence}
+          sites={tracking.arrival.sites} dismiss={tracking.dismiss} copiedId={copiedId} handleCopy={handleCopy} />}
+      </section>
+
       {/* Search */}
       <div className="sticky top-[88px] z-10 bg-gray-950/90 backdrop-blur-lg border-b border-gray-800/30">
         <div className="max-w-lg mx-auto px-4 py-3">
@@ -217,20 +230,37 @@ function App() {
   );
 }
 
-function SiteCard({ site, expandedSite, setExpandedSite, copiedId, handleCopy, dist }: {
+function ArrivalReading({ sites, dismiss, copiedId, handleCopy }: {
+  sites: HolySite[]; dismiss: () => void; copiedId: string | null;
+  handleCopy: (text: string, id: string) => Promise<void>;
+}) {
+  const [selected, setSelected] = useState<string | null>(sites.length === 1 ? sites[0].id : null);
+  const site = sites.find(item => item.id === selected);
+  return <div className="rounded-xl border border-emerald-600 p-3 space-y-3">
+    <p role="status" className="text-emerald-300">{sites.length === 1 ? `Anda berdekatan ${sites[0].name}. Cadangan doa:` : 'Anda berdekatan beberapa lokasi. Pilih lokasi sebenar anda untuk melihat doa.'}</p>
+    <p className="text-xs text-gray-400">Cadangan berdasarkan kedudukan anggaran, bukan pengesahan sempadan ibadah.</p>
+    {sites.length > 1 && <div className="flex flex-wrap gap-2">{sites.map(item => <button key={item.id}
+      aria-pressed={selected === item.id} className="rounded-lg bg-gray-800 p-3 text-sm" onClick={() => setSelected(item.id)}>{item.name}</button>)}</div>}
+    {site && <SiteCard site={site} expandedSite={selected} setExpandedSite={setSelected} copiedId={copiedId} handleCopy={handleCopy} dist={null} idPrefix="arrival-" />}
+    <button className="text-sm underline" onClick={dismiss}>Tutup cadangan ketibaan</button>
+  </div>;
+}
+
+function SiteCard({ site, expandedSite, setExpandedSite, copiedId, handleCopy, dist, idPrefix = '' }: {
   site: HolySite;
   expandedSite: string | null;
   setExpandedSite: (id: string | null) => void;
   copiedId: string | null;
   handleCopy: (text: string, id: string) => Promise<void>;
   dist: number | null;
+  idPrefix?: string;
 }) {
     const isExpanded = expandedSite === site.id;
     const categoryLabel = siteCategories.find((c) => c.id === site.category);
 
     return (
       <article className="card-holy">
-        <button type="button" className="w-full text-left rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400" aria-expanded={isExpanded} aria-controls={`details-${site.id}`} onClick={() => setExpandedSite(isExpanded ? null : site.id)}>
+        <button type="button" className="w-full text-left rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400" aria-expanded={isExpanded} aria-controls={`${idPrefix}details-${site.id}`} onClick={() => setExpandedSite(isExpanded ? null : site.id)}>
         {/* Header */}
         <div className="flex items-start gap-3">
           <div className="mt-1 flex-shrink-0 w-9 h-9 rounded-xl bg-emerald-900/40 flex items-center justify-center">
@@ -267,7 +297,7 @@ function SiteCard({ site, expandedSite, setExpandedSite, copiedId, handleCopy, d
         </button>
         {/* Expanded Recommendations */}
         {isExpanded && (
-          <div id={`details-${site.id}`} className="mt-4 space-y-4">
+          <div id={`${idPrefix}details-${site.id}`} className="mt-4 space-y-4">
             <div className="border-t border-gray-800/50 pt-3" />
             {site.recommendations.map((rec, i) => (
               <div
