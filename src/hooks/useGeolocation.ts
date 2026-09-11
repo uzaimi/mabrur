@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { HolySite } from '@/data/locations';
 
 export interface GpsState {
@@ -7,10 +7,11 @@ export interface GpsState {
   error: string | null;
   loading: boolean;
   active: boolean;
+  accuracy: number | null;
 }
 
 /** Haversine distance in meters between two lat/lng points */
-function haversine(lat1: number, lng1: number, lat2: number, lng2: number): number {
+export function haversine(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const R = 6371000; // Earth radius in meters
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
   const dLng = ((lng2 - lng1) * Math.PI) / 180;
@@ -38,9 +39,18 @@ export function useGeolocation() {
     error: null,
     loading: false,
     active: false,
+    accuracy: null,
   });
+  const requestId = useRef(0);
+  useEffect(() => () => { requestId.current += 1; }, []);
 
   const requestLocation = useCallback(() => {
+    const id = ++requestId.current;
+    setGps({ lat: null, lng: null, accuracy: null, error: null, loading: true, active: false });
+    if (window.isSecureContext === false) {
+      setGps(prev => ({ ...prev, error: 'Lokasi memerlukan laman HTTPS. Anda masih boleh memilih lokasi secara manual.', loading: false }));
+      return;
+    }
     if (!navigator.geolocation) {
       setGps((prev) => ({ ...prev, error: 'GPS tidak disokong oleh peranti ini.', loading: false }));
       return;
@@ -50,47 +60,51 @@ export function useGeolocation() {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        if (id !== requestId.current) return;
         setGps({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
           error: null,
           loading: false,
           active: true,
+          accuracy: position.coords.accuracy,
         });
       },
       (err) => {
+        if (id !== requestId.current) return;
         let msg = 'Tidak dapat mengesan lokasi.';
         if (err.code === 1) msg = 'Akses lokasi dinafikan. Sila benarkan di tetapan pelayar.';
         if (err.code === 2) msg = 'Isyarat GPS terlalu lemah.';
         if (err.code === 3) msg = 'Masa tamat. Cuba lagi.';
         setGps((prev) => ({ ...prev, error: msg, loading: false, active: false }));
       },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     );
   }, []);
 
   const clearLocation = useCallback(() => {
-    setGps({ lat: null, lng: null, error: null, loading: false, active: false });
+    requestId.current += 1;
+    setGps({ lat: null, lng: null, accuracy: null, error: null, loading: false, active: false });
   }, []);
 
   /** Sort sites by distance from current GPS position */
   const sortByProximity = useCallback(
     (sites: HolySite[]): HolySite[] => {
-      if (!gps.lat || !gps.lng) return sites;
+      if (!gps.active || gps.lat === null || gps.lng === null) return sites;
       return [...sites].sort(
         (a, b) => haversine(gps.lat!, gps.lng!, a.lat, a.lng) - haversine(gps.lat!, gps.lng!, b.lat, b.lng)
       );
     },
-    [gps.lat, gps.lng]
+    [gps.active, gps.lat, gps.lng]
   );
 
   /** Distance to a site in meters */
   const distanceTo = useCallback(
     (site: HolySite): number | null => {
-      if (!gps.lat || !gps.lng) return null;
+      if (!gps.active || gps.lat === null || gps.lng === null) return null;
       return haversine(gps.lat, gps.lng, site.lat, site.lng);
     },
-    [gps.lat, gps.lng]
+    [gps.active, gps.lat, gps.lng]
   );
 
   return { gps, requestLocation, clearLocation, sortByProximity, distanceTo };
